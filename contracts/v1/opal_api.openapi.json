@@ -1,0 +1,327 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "OPAL API",
+        "description": "Telemetry & Health Service for 02luka OPAL V4 Pipeline",
+        "version": "1.1.0",
+        "x-opal-authoritative": true
+    },
+    "paths": {
+        "/api/health": {
+            "get": {
+                "summary": "Health Check",
+                "description": "Basic health check endpoint.",
+                "operationId": "health_check_api_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HealthResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/status": {
+            "get": {
+                "summary": "Quick Status",
+                "description": "Quick status for other health checks (avoids recursion).",
+                "operationId": "quick_status_api_status_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jobs": {
+            "get": {
+                "summary": "List Jobs",
+                "description": "List all jobs in the system.",
+                "operationId": "list_jobs_api_jobs_get",
+                "responses": {
+                    "200": {
+                        "description": "Map of job_id to JobDetail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "$ref": "#/components/schemas/JobDetail"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create Job",
+                "description": "Submit a new design pipeline job involving a prompt and an optional artifact.",
+                "operationId": "create_job_api_jobs_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JobCreateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Job created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JobInfo"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jobs/{id}": {
+            "get": {
+                "summary": "Poll Job",
+                "description": "Retrieve the current status and outputs of a specific job.",
+                "operationId": "get_job_api_jobs_id_get",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JobDetail"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HealthResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "title": "Timestamp"
+                    },
+                    "service": {
+                        "type": "string",
+                        "title": "Service",
+                        "default": "opal_api"
+                    },
+                    "version": {
+                        "type": "string",
+                        "title": "Version",
+                        "default": "1.0.0"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "status",
+                    "timestamp"
+                ],
+                "title": "HealthResponse"
+            },
+            "StatusResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "uptime": {
+                        "type": "string",
+                        "title": "Uptime",
+                        "default": "running"
+                    },
+                    "port": {
+                        "type": "integer",
+                        "title": "Port",
+                        "default": 7001
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "status"
+                ],
+                "title": "StatusResponse"
+            },
+            "JobCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "description": "Processing instructions / goal"
+                    },
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Target artifact (.obj, .zip, .pdf, .dwg)"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "description": "Optional job metadata"
+                    }
+                },
+                "required": [
+                    "prompt",
+                    "file"
+                ]
+            },
+            "JobInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/JobStatus"
+                    }
+                },
+                "required": [
+                    "id",
+                    "status"
+                ]
+            },
+            "JobDetail": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/JobStatus"
+                    },
+                    "outputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JobOutput"
+                        }
+                    },
+                    "error": {
+                        "$ref": "#/components/schemas/JobError"
+                    },
+                    "run_provenance": {
+                        "$ref": "#/components/schemas/RunProvenance"
+                    }
+                },
+                "required": [
+                    "id",
+                    "status"
+                ]
+            },
+            "JobStatus": {
+                "type": "string",
+                "description": "Deterministic state of the job. See core/semantics/job_lifecycle.md for rules.",
+                "enum": [
+                    "queued",
+                    "running",
+                    "succeeded",
+                    "failed"
+                ]
+            },
+            "JobOutput": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Stable artifact ID."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Human-friendly filename."
+                    },
+                    "kind": {
+                        "type": "string",
+                        "enum": [
+                            "model",
+                            "image",
+                            "log",
+                            "artifact"
+                        ]
+                    },
+                    "mime": {
+                        "type": "string",
+                        "description": "MIME type (e.g. model/obj, image/png)."
+                    },
+                    "sha256": {
+                        "type": "string",
+                        "description": "SHA256 integrity checksum."
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "Relative URL to fetch the artifact bytes (e.g. /api/artifacts/{id})."
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "kind",
+                    "mime",
+                    "href"
+                ]
+            },
+            "JobError": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "RunProvenance": {
+                "type": "object",
+                "properties": {
+                    "engine": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "input_checksum": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "engine",
+                    "version",
+                    "input_checksum"
+                ]
+            }
+        }
+    }
+}
