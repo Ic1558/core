@@ -52,4 +52,4 @@ To use these contracts in your module:
 
 - [Ic1558/0luka](https://github.com/Ic1558/0luka) — Core system
 - [Ic1558/qs](https://github.com/Ic1558/qs) — Quantity Surveying module
-- [Ic1558/luka-mission-control](https://github.com/Ic1558/luka-mission-control) — Mission control dashboard
+- [Ic1558/0luka-mission-control](https://github.com/Ic1558/0luka-mission-control) — Mission control dashboard
