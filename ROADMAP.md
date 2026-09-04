@@ -1,10 +1,8 @@
-# ROADMAP.md — core
+# ROADMAP.md — core (Contracts SOT)
 
-## Status: FROZEN / HISTORICAL CONTRACTS ARCHIVE
+## Status: ACTIVE CONTRACTS SOURCE OF TRUTH
 
-Active ecosystem contract evolution has transitioned to:
-1. **System Governance**: `Ic1558/0luka` (`CONTRACT.yaml`, `.agent/SOT.md`).
-2. **Cross-Repo Contracts**: Defined in `graft/` directories per repository under the 0LU-1076 standard.
-3. **Modularization Program**: 0LU-993 / GitHub #1620 vertical module slices (0LU-1142 to 0LU-1145).
-
-No active feature branches are planned in this repository. All schemas in `contracts/v1/` remain frozen and backward-compatible.
+This repository serves as the central contracts repository for public schemas and OpenAPI specifications:
+1. **v1 Public Contracts**: Preserved and maintained for backward compatibility (e.g., `contracts/v1/opal_api.openapi.json`).
+2. **Ecosystem Integration**: Inter-module boundaries reference these schemas via `graft/` references under the **0LU-1076 Project Orientation Standard**.
+3. **Modularization Program (0LU-993)**: Program slices (such as 0LU-1145 contract/schema isolation) align public contracts against this repository.

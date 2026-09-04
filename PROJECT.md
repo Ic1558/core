@@ -1,20 +1,19 @@
-# PROJECT.md — core (Historical SOT & Contracts Archive)
+# PROJECT.md — core (Contracts Source of Truth)
 
 ## What this is
 
-`core` historically served as the contracts Source of Truth (SOT) repository for the 0luka ecosystem, holding public API contracts (such as OPAL API OpenAPI specs in `contracts/v1/`).
+`core` is the active contracts Source of Truth (SOT) repository for the 0luka ecosystem, holding canonical public API contracts (such as OPAL API OpenAPI specs in `contracts/v1/`), interface schemas, and versioned data contracts.
 
-## Architecture Status (September 2026 / Foundation Recovery F0–F4)
+## Architecture Status (September 2026)
 
-- **Transition to 0luka Kernel**: Canonical governance laws, agent routing contracts, and system orientation have transitioned directly into [`Ic1558/0luka`](https://github.com/Ic1558/0luka) (`CONTRACT.yaml`, `.agent/SOT.md`, `core_brain/governance/`).
-- **Transition to 0LU-1076 Grafts**: Active inter-module contracts and dependency boundaries are now maintained via `graft/` directories in each respective repository.
-- **Contract Archive**: This repository is maintained as a frozen, backward-compatible archive for public API contracts in `contracts/v1/`.
+- **Division with Kernel**: Dynamic pipeline execution and system governance laws live in [`Ic1558/0luka`](https://github.com/Ic1558/0luka) (`CONTRACT.yaml`, `.agent/SOT.md`), while `core` defines public API schemas and interface contracts.
+- **Project Orientation (0LU-1076)**: Inter-module contracts and dependency boundaries reference these contracts via `graft/` directories in each respective repository.
 
 ## Active Scope
 
-- Backward-compatible OpenAPI schemas (`contracts/v1/opal_api.openapi.json`).
-- Semantic versioning and compatibility guarantees (`COMPATIBILITY.md`).
-- Historical contract reference.
+- Public OpenAPI schemas (`contracts/v1/opal_api.openapi.json`).
+- Semantic versioning and backward-compatibility guarantees (`COMPATIBILITY.md`).
+- Multi-version contract management (`v1`, `v2`, ...).
 
 ## Explicit Non-Scope
 
