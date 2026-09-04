@@ -1,6 +1,16 @@
 # Compatibility Promise
 
-This repository defines the **Source of Truth (SOT)** for all 0luka-related modules.
+This repository defines the contract compatibility guarantees for public schemas in the 0luka ecosystem.
+
+## Transition & Architecture Status (September 2026)
+
+1. **Active Inter-Module Contracts**:
+   - Active cross-repo contracts are now defined via `graft/` directories directly in each repository under the **0LU-1076 Project Orientation Standard**.
+   - Canonical system governance, agent transport policies, and dispatch laws reside in [`Ic1558/0luka`](https://github.com/Ic1558/0luka) (`CONTRACT.yaml`, `.agent/SOT.md`).
+
+2. **Contract Preservation & Freezing**:
+   - Existing contracts in `contracts/v1/` (including `opal_api.openapi.json`) are frozen and preserved for historical compatibility.
+   - Any module consuming `contracts/v1/` contracts can rely on zero breaking changes.
 
 ## Guarantees
 
@@ -27,3 +37,4 @@ This repository defines the **Source of Truth (SOT)** for all 0luka-related modu
 - This repo contains **no runtime code**
 - No infrastructure, credentials, or deployment logic
 - No UI or executor implementation
+- No dynamic governance or routing law (owned by `Ic1558/0luka`)
