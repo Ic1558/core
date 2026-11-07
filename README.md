@@ -1,11 +1,11 @@
-# core — 0luka Source of Truth
+# core — Source of Truth for Contracts
 
-**Version:** 1.1.0  
-**Status:** Contracts, schemas, and semantics (SOT) for 0luka modules and future systems
+**Version:** 1.1.0
+**Status:** Contracts, schemas, and semantics (SOT) that modules conform to. System-agnostic.
 
 ## About
 
-This repository contains the **canonical contracts** that define how 0luka modules communicate. It is the **Source of Truth (SOT)** — all modules must conform to these contracts.
+This repository holds the **canonical contracts** that define how modules communicate. All modules must conform to them. It was started under the legacy 0luka system and is kept deliberately small so any system can consume it. The current system is [LukaOS](https://github.com/Ic1558/lukaos).
 
 ### What This Repo Contains
 
@@ -18,31 +18,27 @@ This repository contains the **canonical contracts** that define how 0luka modul
 
 ### What This Repo Does NOT Contain
 
-- ❌ Runtime code
-- ❌ Infrastructure or deployment logic
-- ❌ Credentials or secrets
-- ❌ UI or executor implementation
+- Runtime code
+- Infrastructure or deployment logic
+- Credentials or secrets
+- UI or executor implementation
 
 ## Current Contracts
 
 ### v1 — OPAL API
 
+Inherited from the legacy 0luka/02luka OPAL pipeline.
+
 - `GET /api/jobs` — Returns map of job_id → JobDetail
 - More endpoints defined in `contracts/v1/`
 
-See `contracts/v1/` directory for full OpenAPI specs.
+See `contracts/v1/` for full OpenAPI specs. LukaOS-specific contracts are not defined here yet.
 
 ## Version Policy
 
-See `COMPATIBILITY.md` for:
-- Semantic versioning rules
-- Backward compatibility guarantees
-- Deprecation policy
-- Multi-version support
+See `COMPATIBILITY.md` for semantic versioning rules, backward compatibility guarantees, deprecation policy and multi-version support.
 
 ## Integration
-
-To use these contracts in your module:
 
 1. Clone or reference this repo
 2. Import the OpenAPI spec from `contracts/v1/`
@@ -50,6 +46,6 @@ To use these contracts in your module:
 
 ## Related Repos
 
-- [Ic1558/0luka](https://github.com/Ic1558/0luka) — Core system
+- [Ic1558/lukaos](https://github.com/Ic1558/lukaos) — current system (Rust local-first runtime)
 - [Ic1558/qs](https://github.com/Ic1558/qs) — Quantity Surveying module
-- [Ic1558/0luka-mission-control](https://github.com/Ic1558/0luka-mission-control) — Mission control dashboard
+- [Ic1558/0luka](https://github.com/Ic1558/0luka) — legacy system, read-only history
