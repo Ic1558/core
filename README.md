@@ -48,4 +48,4 @@ See `COMPATIBILITY.md` for semantic versioning rules, backward compatibility gua
 
 - [Ic1558/lukaos](https://github.com/Ic1558/lukaos) — current system (Rust local-first runtime)
 - [Ic1558/qs](https://github.com/Ic1558/qs) — Quantity Surveying module
-- [Ic1558/0luka](https://github.com/Ic1558/0luka) — legacy system, read-only history
+- [Ic1558/0luka](https://github.com/Ic1558/0luka) — legacy system, superseded by LukaOS
